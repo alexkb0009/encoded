@@ -24,7 +24,7 @@ Feature: Search
         And I wait for the content to load
         Then I should see at least 6 elements with the css selector "ul.nav.result-table > li"
 
-        When I click the link to "?type=AntibodyLot&targets.organism.scientific_name=Homo+sapiens&clonality=polyclonal&targets.investigated_as=histone+modification"
+        When I click the link to "?type=AntibodyLot&targets.organism.scientific_name=Homo+sapiens&targets.investigated_as=transcription+factor&targets.investigated_as=histone+modification"
         And I wait for the content to load
         Then I should see at least 10 elements with the css selector "ul.nav.result-table > li"
 
