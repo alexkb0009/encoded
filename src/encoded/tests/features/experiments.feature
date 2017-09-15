@@ -18,7 +18,7 @@ Feature: Experiments
 
         When I go back
         And I wait for the table to fully load
-        When I click the link to "/experiments/ENCSR000AEN/"
+        When I click the link to "/experiments/ENCSR000AEM/"
         Then I should see an element with the css selector "div.data-display"
         And I should see "ENCODE"
 

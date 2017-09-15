@@ -34,7 +34,7 @@ Feature: Generics
         | Lab                           | Cherry                                |
         | Library                       | ENCLB055ZZZ                           |
         | MouseDonor                    | ENCDO012AAA                           |
-        | Organism                      | human                                 |
+        | Organism                      | celegans                              |
         | Platform                      | Illumina HiSeq 2000                   |
         | Publication                   | integrated encyclopedia               |
         | Replicate                     | 2bf12e3c-1d00-4e9f-bbc6-0cced1414f7f  |
