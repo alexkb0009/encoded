@@ -32,7 +32,7 @@ Feature: Generics
         | File                          | ENCFF000LSP                           |
         | HumanDonor                    | ENCDO017AAA                           |
         | Lab                           | Cherry                                |
-        | Library                       | ENCLB055ZZZ                           |
+        | Library                       | ENCLB000ANI                           |
         | MouseDonor                    | ENCDO012AAA                           |
         | Organism                      | celegans                              |
         | Platform                      | Illumina HiSeq 2000                   |
