@@ -25,6 +25,7 @@ def includeme(config):
     config.add_route('matrix', '/matrix{slash:/?}')
     config.add_route('news', '/news/')
     config.add_route('audit', '/audit/')
+    config.add_route('summary', '/summary{slash:/?}')
     config.scan(__name__)
 
 
@@ -93,20 +94,27 @@ def get_filtered_query(term, search_fields, result_fields, principals, doc_types
 
 
 def prepare_search_term(request):
+    """
+    Handle the "searchTerm" query string parameter, which handles anything entered into the search
+    box in the navigation bar of the site. This function mostly filters the term so that it can be
+    used in the forthcoming Elasticsearch call.
+    """
     from antlr4 import IllegalStateException
     from lucenequery.prefixfields import prefixfields
     from lucenequery import dialects
 
+    # Nothing in the search box (i.e. no "searchTerm" in the query string) means we just search on
+    # '*'.
     search_term = request.params.get('searchTerm', '').strip() or '*'
     if search_term == '*':
         return search_term
 
-    # avoid interpreting slashes as regular expressions
+    # Avoid interpreting slashes in the search term as regular expressions by escaping them.
     search_term = search_term.replace('/', r'\/')
-    # elasticsearch uses : as field delimiter, but we use it as namespace designator
-    # if you need to search fields you have to use @type:field
-    # if you need to search fields where the field contains ":", you will have to escape it
-    # yourself
+
+    # Elasticsearch uses : as field delimiter, but we use it as namespace designator if you need to
+    # search fields you have to use @type:field if you need to search fields where the field
+    # contains ":", you will have to escape it yourself.
     if search_term.find("@type") < 0:
         search_term = search_term.replace(':', '\:')
     try:
@@ -172,7 +180,9 @@ def set_sort_order(request, search_term, types, doc_types, query, result):
 
 def get_search_fields(request, doc_types):
     """
-    Returns set of columns that are being searched and highlights
+    Returns set of columns that are being searched and highlights for each of the given doc_types.
+    Returns "fields" which is a set of all boosted values to pass to Elasticsearch, plus uuid.
+    Also returns "highlights" which is a dictionary of the same boosted values.
     """
     fields = {'uuid'}
     highlights = {}
@@ -575,11 +585,18 @@ def format_facets(es_results, facets, used_filters, schemas, total, principals):
 
 
 def normalize_query(request):
+    """Extract the query string corresponding to the given request.
+    """
+
+    # Make a tuple list of all the key-value pairs in the current query string.
     types = request.registry[TYPES]
     fixed_types = (
         (k, types[v].name if k == 'type' and v in types else v)
         for k, v in request.params.items()
     )
+
+    # Convert the tuple list in fixed_types to a query string if it exists. Return the fully
+    # formed query string, or an empty string if no query exists in the request.
     qs = urlencode([
         (k.encode('utf-8'), v.encode('utf-8'))
         for k, v in fixed_types
@@ -1522,3 +1539,128 @@ def audit(context, request):
         result['notification'] = 'No results found'
 
     return result
+
+
+@view_config(route_name='summary', request_method='GET', permission='search')
+def summary(context, request):
+    """Implement the /summary/ search page. Currently, it requires `?type=Experiment` in the query
+    string of the URL, and errors if that's not provided, or if too many `?type=` are provided.
+    """
+    # Extract the query string from the request, and form a result the summary-page front-end can
+    # use to display.
+    search_base = normalize_query(request)
+
+    # Start a result object to be filled in by search results.
+    result = {
+        '@context': request.route_path('jsonld_context'),
+        '@id': request.route_path('summary', slash='/') + search_base,
+        '@type': ['Summary'],
+        'filters': [],
+        'notification': '',
+    }
+
+    # First make sure the query string request fits our current summary limitations of only working
+    # with experiments.
+    doc_types = request.params.getall('type')
+    if len(doc_types) != 1:
+        msg = 'Search result matrix currently requires specifying a single type.'
+        raise HTTPBadRequest(explanation=msg)
+    item_type = doc_types[0]
+    types = request.registry[TYPES]
+    if item_type not in types:
+        msg = 'Invalid type: {}'.format(item_type)
+        raise HTTPBadRequest(explanation=msg)
+    type_info = types[item_type]
+    if not hasattr(type_info.factory, 'matrix'):
+        msg = 'No summary configured for type: {}'.format(item_type)
+        raise HTTPBadRequest(explanation=msg)
+    schema = type_info.schema
+
+    matrix = result['matrix'] = type_info.factory.matrix.copy()
+    matrix['search_base'] = request.route_path('search', slash='/') + search_base
+    matrix['clear_summary'] = request.route_path('summary', slash='/') + '?type=' + item_type
+
+    # Retrieve the Elasticsearch instance so we can perform our summary search.
+    es = request.registry[ELASTIC_SEARCH]
+    es_index = request.registry.settings['snovault.elasticsearch.index']
+
+    # Get the current logged-in status of the user.
+    principals = effective_principals(request)
+
+    # Pull in an Elasticsearch-friendly search term from the search box in the navigation bar --
+    # i.e. the "searchTerm" query string parameter.
+    search_term = prepare_search_term(request)
+
+    # Get the fields to search in `search_fields`. We don't use `highlights` actually.
+    search_fields, highlights = get_search_fields(request, doc_types)
+
+    # Builds filtered query which supports multiple facet selection.
+    query = get_filtered_query(search_term,
+                               search_fields,
+                               [],
+                               principals,
+                               doc_types)
+
+    # If nothing was specified for the `searchTerm` query string parameter, most of this query goes
+    # away.
+    if search_term == '*':
+        query['query']['match_all'] = {}
+        del query['query']['query_string']
+
+    # Setting filters.
+    # Rather than setting them at the top level of the query
+    # we collect them for use in aggregations later.
+    query_filters = query.pop('filter')
+    filter_collector = {'filter': query_filters}
+    used_filters = set_filters(request, filter_collector, result)
+    filters = filter_collector['filter']['and']['filters']
+
+    # Add facets to the query.
+    facets = [(field, facet) for field, facet in schema['facets'].items() if
+              field in matrix['x']['facets'] or field in matrix['y']['facets']]
+
+    query['aggs'] = set_facets(facets, used_filters, principals, doc_types)
+
+    # Group results in 2 dimensions
+    x_grouping = matrix['x']['group_by']
+    y_groupings = matrix['y']['group_by']
+    x_agg = {
+        "terms": {
+            "field": 'embedded.' + x_grouping + '.raw',
+            "size": 0,  # no limit
+        },
+    }
+    aggs = {x_grouping: x_agg}
+    for field in reversed(y_groupings):
+        aggs = {
+            field: {
+                "terms": {
+                    "field": 'embedded.' + field + '.raw',
+                    "size": 0,  # no limit
+                },
+                "aggs": aggs,
+            },
+        }
+    aggs['x'] = x_agg
+    query['aggs']['matrix'] = {
+        "filter": {
+            "bool": {
+                "must": filters,
+            }
+        },
+        "aggs": aggs,
+    }
+
+    # Execute the query
+    es_results = es.search(body=query, index=es_index, search_type='count')
+
+    aggregations = es_results['aggregations']
+    result['matrix']['doc_count'] = total = aggregations['matrix']['doc_count']
+    result['matrix']['max_cell_doc_count'] = 0
+
+    # Format facets for results
+    result['facets'] = format_facets(
+        es_results, facets, used_filters, (schema,), total, principals)
+
+    return result
+\
