@@ -929,11 +929,6 @@ export class Form extends React.Component {
                 className="rf-Form"
                 onSubmit={this.save}
             >
-                <Field
-                    schema={this.props.schema}
-                    value={this.state.value}
-                    updateChild={this.update}
-                />
                 <div className="pull-right">
                     <a href="" className="btn btn-default">Cancel</a>
                     {' '}
@@ -943,6 +938,11 @@ export class Form extends React.Component {
                         disabled={!this.canSave()}
                     >{this.props.submitLabel}</button>
                 </div>
+                <Field
+                    schema={this.props.schema}
+                    value={this.state.value}
+                    updateChild={this.update}
+                />
                 {this.state.error ? <div className="rf-Message">{this.state.error}</div> : ''}
             </form>
         );
