@@ -2,7 +2,10 @@
 .navbar-inverse {
     border: none;
     border-bottom: 0px solid #4e7294;
-    background: #0a253d;
+
+    .navbar-system {
+        background-color: #0a253d;
+    }
 
     .navbar-brand {
         margin-left: -15px;

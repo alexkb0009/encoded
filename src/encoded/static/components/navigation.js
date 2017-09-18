@@ -75,13 +75,15 @@ export default class Navigation extends React.Component {
         const portal = this.context.portal;
         return (
             <div id="navbar" className="navbar navbar-fixed-top navbar-inverse">
-                <div className="container">
-                    <Navbar brand={portal.portal_title} brandlink="/" label="main" navClasses="navbar-main">
-                        <GlobalSections />
-                        <UserActions />
-                        {this.props.isHomePage ? null : <ContextActions />}
-                        <Search />
-                    </Navbar>
+                <div className="navbar-system">
+                    <div className="container">
+                        <Navbar brand={portal.portal_title} brandlink="/" label="main" navClasses="navbar-main">
+                            <GlobalSections />
+                            <UserActions />
+                            {this.props.isHomePage ? null : <ContextActions />}
+                            <Search />
+                        </Navbar>
+                    </div>
                 </div>
                 {this.state.testWarning ?
                     <div className="test-warning">
@@ -95,6 +97,7 @@ export default class Navigation extends React.Component {
                         </div>
                     </div>
                 : null}
+                <div id="form-accessories" className="container" />
             </div>
         );
     }

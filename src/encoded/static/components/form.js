@@ -674,6 +674,29 @@ Field.childContextTypes = {
 };
 
 
+const FormButtons = (props) => {
+    const { submitLabel, save, saveable } = props;
+
+    return (
+        <div className="pull-right">
+            <a href="" className="btn btn-default">Cancel</a>
+            {' '}
+            <button
+                className="btn btn-success"
+                onClick={save}
+                disabled={!saveable}
+            >{submitLabel}</button>
+        </div>
+    );
+};
+
+FormButtons.propTypes = {
+    submitLabel: PropTypes.string.isRequired,
+    save: PropTypes.func.isRequired,
+    saveable: PropTypes.bool.isRequired,
+};
+
+
 export class Form extends React.Component {
     // The Form component renders a form based on a JSON schema.
 
@@ -741,10 +764,14 @@ export class Form extends React.Component {
     }
 
     componentDidMount() {
-        ReactDOM.render(<div>Hello</div>, document.getElementById('helloworld'));
+        const saveable = this.canSave();
+        ReactDOM.render(<FormButtons submitLabel={this.props.submitLabel} save={this.save} saveable={saveable} />, document.getElementById('form-accessories'));
     }
 
     componentDidUpdate(prevProps, prevState) {
+        const saveable = this.canSave();
+        ReactDOM.render(<FormButtons submitLabel={this.props.submitLabel} save={this.save} saveable={saveable} />, document.getElementById('form-accessories'));
+
         // If form error state changed, scroll to first error message
         // to make sure the user notices it.
         if (!_.isEqual(prevState.errors, this.state.errors)) {
@@ -753,6 +780,10 @@ export class Form extends React.Component {
                 window.scrollTo(0, offset(error).top - document.getElementById('navbar').clientHeight);
             }
         }
+    }
+
+    componentWillUnmount() {
+        ReactDOM.render(<div />, document.getElementById('form-accessories'));
     }
 
     validate(value) {
@@ -934,16 +965,6 @@ export class Form extends React.Component {
                 className="rf-Form"
                 onSubmit={this.save}
             >
-                <div className="pull-right">
-                    <div id="helloworld" />
-                    <a href="" className="btn btn-default">Cancel</a>
-                    {' '}
-                    <button
-                        className="btn btn-success"
-                        onClick={this.save}
-                        disabled={!this.canSave()}
-                    >{this.props.submitLabel}</button>
-                </div>
                 <Field
                     schema={this.props.schema}
                     value={this.state.value}
