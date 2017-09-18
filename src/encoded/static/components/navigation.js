@@ -97,7 +97,7 @@ export default class Navigation extends React.Component {
                         </div>
                     </div>
                 : null}
-                <div id="form-accessories" className="container" />
+                <div id="form-accessories" className="container form-accessories" />
             </div>
         );
     }

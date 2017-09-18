@@ -679,10 +679,10 @@ const FormButtons = (props) => {
 
     return (
         <div className="pull-right">
-            <a href="" className="btn btn-default">Cancel</a>
+            <a href="" className="btn btn-sm btn-default">Cancel</a>
             {' '}
             <button
-                className="btn btn-success"
+                className="btn btn-sm btn-success"
                 onClick={save}
                 disabled={!saveable}
             >{submitLabel}</button>
