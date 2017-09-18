@@ -8,10 +8,10 @@ Feature: Edit forms
         And I click the link to "/antibodies/ENCAB728YTO/#!edit"
         And I wait for an element with the css selector "form.rf-Form" to load
         And I wait for 5 seconds
-        And I fill in "notes" with "It's not a very nice antigen"
+        And I fill in "product_id" with "62626"
         And I press "Save"
         And I wait for an element with the css selector ".view-item.type-AntibodyLot" to load
-        Then I should see "It's not a very nice antigen"
+        Then I should see "62626"
 
 #    Scenario: Edit a child object
 #        When I visit "/antibodies/ENCAB728YTO/#!edit"
