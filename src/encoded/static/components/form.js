@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-for */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import jsonschema from 'jsonschema';
 import _ from 'underscore';
@@ -739,6 +740,10 @@ export class Form extends React.Component {
         };
     }
 
+    componentDidMount() {
+        ReactDOM.render(<div>Hello</div>, document.getElementById('helloworld'));
+    }
+
     componentDidUpdate(prevProps, prevState) {
         // If form error state changed, scroll to first error message
         // to make sure the user notices it.
@@ -930,6 +935,7 @@ export class Form extends React.Component {
                 onSubmit={this.save}
             >
                 <div className="pull-right">
+                    <div id="helloworld" />
                     <a href="" className="btn btn-default">Cancel</a>
                     {' '}
                     <button
