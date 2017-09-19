@@ -35,6 +35,7 @@ require('./inputs');
 require('./blocks');
 require('./user');
 require('./schema');
+require('./summary');
 require('./region_search');
 require('./auditmatrix');
 

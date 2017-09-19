@@ -1576,7 +1576,7 @@ def summary(context, request):
         raise HTTPBadRequest(explanation=msg)
     schema = type_info.schema
 
-    matrix = result['matrix'] = type_info.factory.matrix.copy()
+    matrix = result['summary'] = type_info.factory.matrix.copy()
     matrix['search_base'] = request.route_path('search', slash='/') + search_base
     matrix['clear_summary'] = request.route_path('summary', slash='/') + '?type=' + item_type
 
@@ -1655,8 +1655,8 @@ def summary(context, request):
     es_results = es.search(body=query, index=es_index, search_type='count')
 
     aggregations = es_results['aggregations']
-    result['matrix']['doc_count'] = total = aggregations['matrix']['doc_count']
-    result['matrix']['max_cell_doc_count'] = 0
+    result['summary']['doc_count'] = total = aggregations['matrix']['doc_count']
+    result['summary']['max_cell_doc_count'] = 0
 
     # Format facets for results
     result['facets'] = format_facets(
