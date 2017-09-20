@@ -1579,6 +1579,7 @@ def summary(context, request):
     matrix = result['summary'] = type_info.factory.matrix.copy()
     matrix['search_base'] = request.route_path('search', slash='/') + search_base
     matrix['clear_summary'] = request.route_path('summary', slash='/') + '?type=' + item_type
+    result['title'] = type_info.name + ' Summary'
 
     # Retrieve the Elasticsearch instance so we can perform our summary search.
     es = request.registry[ELASTIC_SEARCH]

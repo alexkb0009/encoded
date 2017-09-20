@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel } from '../libs/bootstrap/panel';
 import * as globals from './globals';
+import { FacetList } from './search';
 
 
 // Render the title pane.
@@ -9,7 +10,8 @@ const SummaryTitle = (props) => {
     const { context } = props;
 
     return (
-        <div className="summary-title">
+        <div className="summary-header__title">
+            {context.title}
         </div>
     );
 };
@@ -24,7 +26,14 @@ const SummaryHorzFacets = (props) => {
     const { context } = props;
 
     return (
-        <div className="summary-facets-horizontal">
+        <div className="summary-header__facets-horizontal">
+            <FacetList
+                facets={xFacets}
+                filters={context.filters}
+                orientation="horizontal"
+                searchBase={matrixSearch}
+                onFilter={this.onFilter}
+            />
         </div>
     );
 };
