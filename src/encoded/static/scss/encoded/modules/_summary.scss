@@ -1,12 +1,22 @@
 // Contains the summary title and horizontal facets
 .summary-header {
-    display: flex;
 }
 
 .summary-header__title {
-    flex: 0 1 30%;
 }
 
 .summary-header__horz-facets {
 
+}
+
+.summary-content {
+    display: flex;
+
+    @at-root #{&}__facets-vertical {
+        flex: 0 0 20%;
+    }
+
+    @at-root #{&}__data {
+        flex: 0 1 80%;
+    }
 }

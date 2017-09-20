@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import url from 'url';
 import { Panel } from '../libs/bootstrap/panel';
 import * as globals from './globals';
 import { FacetList } from './search';
@@ -11,7 +12,7 @@ const SummaryTitle = (props) => {
 
     return (
         <div className="summary-header__title">
-            {context.title}
+            <h1>{context.title}</h1>
         </div>
     );
 };
@@ -22,39 +23,113 @@ SummaryTitle.propTypes = {
 
 
 // Render the horizontal facets.
-const SummaryHorzFacets = (props) => {
-    const { context } = props;
+class SummaryHorzFacets extends React.Component {
+    constructor() {
+        super();
 
-    return (
-        <div className="summary-header__facets-horizontal">
-            <FacetList
-                facets={xFacets}
-                filters={context.filters}
-                orientation="horizontal"
-                searchBase={matrixSearch}
-                onFilter={this.onFilter}
-            />
-        </div>
-    );
-};
+        // Bind `this` to non-React methods
+        this.onFilter = this.onFilter.bind(this);
+    }
+
+    onFilter(e) {
+        const search = e.currentTarget.getAttribute('href');
+        this.context.navigate(search);
+        e.stopPropagation();
+        e.preventDefault();
+    }
+
+    render() {
+        const { context } = this.props;
+        const { location_href } = this.context;
+        const allFacets = context.facets;
+
+        // Get the array of facet field values to display in the horizontal facet area.
+        const horzFacetFields = context.summary.x.facets;
+
+        // Extract the horizontal facets from the list of all facets. We use the array of horizontal
+        // facet field values of facets that should appear in the horizontal facets.
+        const horzFacets = allFacets.filter(facet => horzFacetFields.indexOf(facet.field) >= 0);
+
+        // Calculate the searchBase, which is the current search query string fragment that can have
+        // terms added to it.`
+        const searchBase = `${url.parse(location_href).search}&` || '?';
+
+        return (
+            <div className="summary-header__facets-horizontal">
+                <FacetList
+                    facets={horzFacets}
+                    filters={context.filters}
+                    orientation="horizontal"
+                    searchBase={searchBase}
+                    onFilter={this.onFilter}
+                />
+            </div>
+        );
+    }
+}
 
 SummaryHorzFacets.propTypes = {
     context: PropTypes.object.isRequired, // Summary search result object
 };
 
+SummaryHorzFacets.contextTypes = {
+    location_href: PropTypes.string, // Current URL
+    navigate: PropTypes.func, // encoded navigation
+};
+
 
 // Render the vertical facets.
-const SummaryVertFacets = (props) => {
-    const { context } = props;
+class SummaryVertFacets extends React.Component {
+    constructor() {
+        super();
 
-    return (
-        <div className="summary-facets-vertical">
-        </div>
-    );
-};
+        // Bind `this` to non-React methods.
+        this.onFilter = this.onFilter.bind(this);
+    }
+
+    onFilter(e) {
+        const search = e.currentTarget.getAttribute('href');
+        this.context.navigate(search);
+        e.stopPropagation();
+        e.preventDefault();
+    }
+
+    render() {
+        const { context } = this.props;
+        const { location_href } = this.context;
+        const allFacets = context.facets;
+
+        // Get the array of facet field values to display in the horizontal facet area.
+        const vertFacetFields = context.summary.y.facets;
+
+        // Extract the horizontal facets from the list of all facets. We use the array of horizontal
+        // facet field values of facets that should appear in the horizontal facets.
+        const vertFacets = allFacets.filter(facet => vertFacetFields.indexOf(facet.field) >= 0);
+
+        // Calculate the searchBase, which is the current search query string fragment that can have
+        // terms added to it.`
+        const searchBase = `${url.parse(location_href).search}&` || '?';
+
+        return (
+            <div className="summary-content__facets-vertical">
+                <FacetList
+                    facets={vertFacets}
+                    filters={context.filters}
+                    searchBase={searchBase}
+                    onFilter={this.onFilter}
+                />
+            </div>
+        );
+    }
+}
 
 SummaryVertFacets.propTypes = {
     context: PropTypes.object.isRequired, // Summary search result object
+};
+
+SummaryVertFacets.contextTypes = {
+    location_href: PropTypes.string, // Current URL
+    navigate: PropTypes.func, // encoded navigation
 };
 
 
@@ -63,7 +138,8 @@ const SummaryData = (props) => {
     const { context } = props;
 
     return (
-        <div className="summary-data">
+        <div className="summary-content__data">
+            Hello
         </div>
     );
 };
