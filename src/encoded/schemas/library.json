@@ -267,6 +267,9 @@
                     "rRNA"
                 ]
             }
+        },
+        "nih_consent": {
+            "description": "NIH consent approval number."
         }
     },
     "columns": {
