@@ -269,7 +269,10 @@
             }
         },
         "nih_consent": {
-            "description": "NIH consent approval number."
+            "type": "string",
+            "title": "NIH consent identifier",
+            "description": "The NIH consent identifier for release of human data.",
+            "comment": "Release of ENCODE4 human data requires NIH consent identifier. This does not apply to non-human data."
         }
     },
     "columns": {
