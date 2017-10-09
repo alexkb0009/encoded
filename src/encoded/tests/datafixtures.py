@@ -148,6 +148,17 @@ def encode2_award(testapp):
 
 
 @pytest.fixture
+def encode4_award(testapp):
+    item = {
+        'name': 'encode4-award',
+        'rfa': 'ENCODE4',
+        'project': 'ENCODE',
+        'viewing_group': 'ENCODE4',
+    }
+    return testapp.post_json('/award', item).json['@graph'][0]
+
+
+@pytest.fixture
 def source(testapp):
     item = {
         'name': 'sigma',
@@ -461,6 +472,7 @@ def rnai(testapp, lab, award, target):
     }
     return testapp.post_json('/rnai', item).json['@graph'][0]
 
+
 @pytest.fixture
 def construct(testapp, lab, award, target, source, target_control):
     item = {
@@ -472,6 +484,7 @@ def construct(testapp, lab, award, target, source, target_control):
         'tags': [{'name': 'eGFP', 'location': 'C-terminal'}],
     }
     return testapp.post_json('/construct', item).json['@graph'][0]
+
 
 @pytest.fixture
 def construct_genetic_modification(
@@ -488,10 +501,11 @@ def construct_genetic_modification(
         'category': 'insertion',
         'purpose': 'tagging',
         'method': 'stable transfection',
-        'introduced_tags': [{'name':'eGFP', 'location': 'C-terminal', 'promoter_used': target_promoter['@id']}],
+        'introduced_tags': [{'name': 'eGFP', 'location': 'C-terminal', 'promoter_used': target_promoter['@id']}],
         'modified_site_by_target_id': target['@id']
     }
     return testapp.post_json('/genetic_modification', item).json['@graph'][0]
+
 
 @pytest.fixture
 def construct_genetic_modification_N(
@@ -507,10 +521,11 @@ def construct_genetic_modification_N(
         'category': 'insertion',
         'purpose': 'tagging',
         'method': 'stable transfection',
-        'introduced_tags': [{'name':'eGFP', 'location': 'N-terminal'}],
+        'introduced_tags': [{'name': 'eGFP', 'location': 'N-terminal'}],
         'modified_site_by_target_id': target['@id']
     }
     return testapp.post_json('/genetic_modification', item).json['@graph'][0]
+
 
 @pytest.fixture
 def ucsc_browser_composite(testapp, lab, award):
@@ -857,7 +872,7 @@ def encode_lab(testapp):
         'name': 'encode-processing-pipeline',
         'title': 'ENCODE Processing Pipeline',
         'status': 'current'
-        }
+    }
     return testapp.post_json('/lab', item, status=201).json['@graph'][0]
 
 
