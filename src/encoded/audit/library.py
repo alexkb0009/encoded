@@ -5,11 +5,22 @@ from snovault import (
 
 
 def audit_library_nih_consent(value, system):
-    if 'award' not in value:
+    '''
+    Check if library from human biosample and ENCODE4 award has NIH consent identifier.
+    '''
+    if 'award' not in value or 'biosample' not in value:
         return
-    if value['award']['rfa'] == 'ENCODE4':
-        detail = 'NIH consent number is required for human data in ENCODE 4.'
+    if (value.get('award', {}).get('rfa') == 'ENCODE4'
+        and value.get('biosample',
+                      {}).get('organism',
+                              {}).get('scientific_name') == 'Homo sapiens'):
+        nih_consent = value.get('nih_consent')
+        if nih_consent is not None and len(nih_consent) != 0:
+            return
+        detail = 'Library {} is missing the NIH consent identifier required for human data in'\
+                 ' ENCODE 4.'.format(value['@id'])
         yield AuditFailure('missing nih_consent', detail, level='INTERNAL_ACTION')
+    # This return follows pattern of other audits.
     return
 
 
