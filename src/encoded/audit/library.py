@@ -32,7 +32,7 @@ function_dispatcher = {
 @audit_checker('Library',
                frame=['biosample.organism',
                       'award'])
-def audit_file(value, system):
+def audit_libary(value, system):
     for function_name in function_dispatcher.keys():
         for failure in function_dispatcher[function_name](value, system):
             yield failure
