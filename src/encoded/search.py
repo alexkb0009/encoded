@@ -184,7 +184,8 @@ def get_search_fields(request, doc_types):
     Returns "fields" which is a set of all boosted values to pass to Elasticsearch, plus uuid.
     Also returns "highlights" which is a dictionary of the same boosted values.
     """
-    fields = {'uuid'}
+
+    fields = {'uuid', 'unique_keys.*'}
     highlights = {}
     types = request.registry[TYPES]
     for doc_type in doc_types:
