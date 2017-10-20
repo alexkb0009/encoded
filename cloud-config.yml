@@ -1,7 +1,6 @@
 #cloud-config
 
 # Instance
-
 apt_sources:
 - source: "ppa:webupd8team/java"
 - source: "deb http://packages.elasticsearch.org/elasticsearch/1.7/debian stable main"
