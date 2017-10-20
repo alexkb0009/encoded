@@ -11,9 +11,9 @@ def audit_library_nih_consent(value, system):
     if 'award' not in value or 'biosample' not in value:
         return
     if (value.get('award', {}).get('rfa') == 'ENCODE4'
-        and value.get('biosample',
-                      {}).get('organism',
-                              {}).get('scientific_name') == 'Homo sapiens'):
+            and value.get('biosample',
+                          {}).get('organism',
+                                  {}).get('scientific_name') == 'Homo sapiens'):
         nih_consent = value.get('nih_consent')
         if nih_consent is not None and len(nih_consent) != 0:
             return
