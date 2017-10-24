@@ -330,7 +330,8 @@ def run(wale_s3_prefix, image_id, instance_type, elasticsearch, spot_instance, s
         tag_spot_instance(instances, tmp_name, branch, commit, username, elasticsearch, client.spotClient, cluster_name)
         print("Spot instance request had been completed, please check to be sure it was fufilled")
 
-def main():
+
+def parse_args():
     import argparse
 
     def hostname(value):
@@ -367,8 +368,13 @@ def main():
     parser.add_argument('--teardown-cluster', default=None, help="Takes down all the cluster launched from the branch")
     parser.add_argument('--cluster-name', default=None, help="Name of the cluster")
     args = parser.parse_args()
+    kwargs = vars(args)
+    return kwargs
 
-    return run(**vars(args))
+
+def main():
+    kwargs = parse_args()
+    return run(**kwargs)
 
 
 if __name__ == '__main__':
