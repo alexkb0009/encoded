@@ -1561,7 +1561,9 @@ def summary(context, request):
     }
 
     # First make sure the query string request fits our current summary limitations of only working
-    # with experiments.
+    # with experiments. I also check (through type_info.factory) that a `matrix` property has been
+    # set in the specified object type class (currently only "Experiment"), because we use that
+    # property to configure the same facets on the page that the matrix page has.
     doc_types = request.params.getall('type')
     if len(doc_types) != 1:
         msg = 'Search result matrix currently requires specifying a single type.'
@@ -1577,6 +1579,8 @@ def summary(context, request):
         raise HTTPBadRequest(explanation=msg)
     schema = type_info.schema
 
+    # Get some required information from the matrix property of the type we're examining. Also
+    # prepopulate `results` with some info before it gets filled in with ES search results.
     matrix = result['summary'] = type_info.factory.matrix.copy()
     matrix['search_base'] = request.route_path('search', slash='/') + search_base
     matrix['clear_summary'] = request.route_path('summary', slash='/') + '?type=' + item_type
@@ -1621,9 +1625,10 @@ def summary(context, request):
     facets = [(field, facet) for field, facet in schema['facets'].items() if
               field in matrix['x']['facets'] or field in matrix['y']['facets']]
 
+    # Convert our facet specification to an ES aggregations query.
     query['aggs'] = set_facets(facets, used_filters, principals, doc_types)
 
-    # Group results in 2 dimensions
+    # Group results in 2 dimensions.
     x_grouping = matrix['x']['group_by']
     y_groupings = matrix['y']['group_by']
     x_agg = {
@@ -1653,16 +1658,16 @@ def summary(context, request):
         "aggs": aggs,
     }
 
-    # Execute the query
+    # Execute the query. The facet data we're looking for gets returned in the "aggregations"
+    # property of es_results.
     es_results = es.search(body=query, index=es_index, search_type='count')
-
     aggregations = es_results['aggregations']
     result['summary']['doc_count'] = total = aggregations['matrix']['doc_count']
     result['summary']['max_cell_doc_count'] = 0
 
-    # Format facets for results
+    # Format the aggregations into facet data the front end can understand. We only use the one
+    # relevant schema for the /summary/ page.
     result['facets'] = format_facets(
         es_results, facets, used_filters, (schema,), total, principals)
 
     return result
-\

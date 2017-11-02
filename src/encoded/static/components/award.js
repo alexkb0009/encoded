@@ -295,7 +295,7 @@ function createBarChart(chartId, data, colors, replicateLabels, baseSearchUri, n
 
 
 // Display and handle clicks in the chart of labs.
-class LabChart extends React.Component {
+export class LabChart extends React.Component {
     constructor() {
         super();
 
@@ -308,12 +308,16 @@ class LabChart extends React.Component {
         this.createChart(`${labChartId}-${this.props.ident}`, this.props.labs);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return !_.isEqual(this.props.labs, nextProps.labs);
+    }
+
     componentDidUpdate() {
         if (this.props.labs.length) {
             if (this.chart) {
                 this.updateChart(this.chart, this.props.labs);
             } else {
-                this.createChart(`${statusChartId}-${this.props.ident}`, this.props.labs);
+                this.createChart(`${labChartId}-${this.props.ident}`, this.props.labs);
             }
         } else if (this.chart) {
             this.chart.destroy();
@@ -338,7 +342,7 @@ class LabChart extends React.Component {
         chart.data.datasets[0].data = values;
         chart.data.datasets[0].backgroundColor = colors;
         chart.data.labels = labels;
-        chart.options.onClick.baseSearchUri = `${linkUri}${award.name}${objectQuery}&lab.title=`;
+        chart.options.onClick.baseSearchUri = `${linkUri}${award ? award.name : ''}${objectQuery}&lab.title=`;
         chart.update();
 
         // Redraw the updated legend
@@ -358,11 +362,7 @@ class LabChart extends React.Component {
         const colors = labels.map((label, i) => labColorList[i % labColorList.length]);
 
         // Create the chart.
-        createDoughnutChart(chartId, values, labels, colors, `${this.props.linkUri}${this.props.award.name}&lab.title=`, (uri) => { this.context.navigate(uri); })
-            .then((chartInstance) => {
-                // Save the created chart instance.
-                this.chart = chartInstance;
-            });
+        createDoughnutChart(chartId, values, labels, colors, `${this.props.linkUri}${this.props.award ? this.props.award.name : ''}&lab.title=`, (uri) => { this.context.navigate(uri); });
     }
 
     render() {
@@ -392,7 +392,7 @@ class LabChart extends React.Component {
 }
 
 LabChart.propTypes = {
-    award: PropTypes.object.isRequired, // Award being displayed
+    award: PropTypes.object, // Award being displayed
     labs: PropTypes.array.isRequired, // Array of labs facet data
     linkUri: PropTypes.string.isRequired, // Base URI for matrix links
     ident: PropTypes.string.isRequired, // Unique identifier to `id` the charts
@@ -400,6 +400,7 @@ LabChart.propTypes = {
 };
 
 LabChart.defaultProps = {
+    award: null,
     objectQuery: '',
 };
 
@@ -408,7 +409,7 @@ LabChart.contextTypes = {
 };
 
 // Display and handle clicks in the chart of assays.
-class CategoryChart extends React.Component {
+export class CategoryChart extends React.Component {
     constructor() {
         super();
         this.createChart = this.createChart.bind(this);
@@ -419,6 +420,10 @@ class CategoryChart extends React.Component {
         if (this.props.categoryData.length) {
             this.createChart(`${categoryChartId}-${this.props.ident}`, this.props.categoryData);
         }
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return !_.isEqual(this.props.categoryData, nextProps.categoryData);
     }
 
     componentDidUpdate() {
@@ -452,7 +457,7 @@ class CategoryChart extends React.Component {
         chart.data.datasets[0].data = values;
         chart.data.datasets[0].backgroundColor = colors;
         chart.data.labels = labels;
-        chart.options.onClick.baseSearchUri = `${linkUri}${award.name}${objectQuery}&${categoryFacet}=`;
+        chart.options.onClick.baseSearchUri = `${linkUri}${award ? award.name : ''}${objectQuery}&${categoryFacet}=`;
         chart.update();
 
         // Redraw the updated legend
@@ -474,7 +479,7 @@ class CategoryChart extends React.Component {
         const colors = labels.map((label, i) => typeSpecificColorList[i % typeSpecificColorList.length]);
 
         // Create the chart.
-        createDoughnutChart(chartId, values, labels, colors, `${linkUri}${award.name}&${categoryFacet}=`, (uri) => { this.context.navigate(uri); })
+        createDoughnutChart(chartId, values, labels, colors, `${linkUri}${award ? award.name : ''}&${categoryFacet}=`, (uri) => { this.context.navigate(uri); })
             .then((chartInstance) => {
                 // Save the created chart instance.
                 this.chart = chartInstance;
@@ -508,7 +513,7 @@ class CategoryChart extends React.Component {
 }
 
 CategoryChart.propTypes = {
-    award: PropTypes.object.isRequired, // Award being displayed
+    award: PropTypes.object, // Award being displayed
     categoryData: PropTypes.array.isRequired, // Type-specific data to display in a chart
     title: PropTypes.string.isRequired, // Title to display above the chart
     linkUri: PropTypes.string.isRequired, // Element of matrix URI to select
@@ -518,6 +523,7 @@ CategoryChart.propTypes = {
 };
 
 CategoryChart.defaultProps = {
+    award: null,
     objectQuery: '',
 };
 
@@ -972,7 +978,7 @@ ControlsChart.contextTypes = {
     navigate: PropTypes.func,
 };
 
-class StatusExperimentChart extends React.Component {
+export class StatusExperimentChart extends React.Component {
     constructor() {
         super();
         this.createChart = this.createChart.bind(this);

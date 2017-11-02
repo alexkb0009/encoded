@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import url from 'url';
 import { Panel } from '../libs/bootstrap/panel';
+import { LabChart, CategoryChart } from './award';
 import * as globals from './globals';
 import { FacetList } from './search';
 
@@ -134,15 +135,24 @@ SummaryVertFacets.contextTypes = {
 
 
 // Render the data for the summary.
-const SummaryData = (props) => {
-    const { context } = props;
+class SummaryData extends React.Component {
+    render() {
+        const { context } = this.props;
 
-    return (
-        <div className="summary-content__data">
-            Hello
-        </div>
-    );
-};
+        // Find the labs facet in the search results.
+        const labFacet = context.facets.find(facet => facet.field === 'lab.title');
+        const assayFacet = context.facets.find(facet => facet.field === 'assay_title');
+        const labs = labFacet ? labFacet.terms : null;
+        const assays = assayFacet ? assayFacet.terms : null;
+
+        return (
+            <div className="summary-content__data">
+                {labs ? <LabChart labs={labs} linkUri="/matrix/?type=Experiment&" ident="experiments" /> : null}
+                {assays ? <CategoryChart categoryData={assays} categoryFacet="assay_title" title="Assays" linkUri="/matrix/?type=Experiment&" ident="assays" /> : null}
+            </div>
+        );
+    }
+}
 
 SummaryData.propTypes = {
     context: PropTypes.object.isRequired, // Summary search result object
