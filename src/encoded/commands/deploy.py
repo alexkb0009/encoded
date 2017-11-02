@@ -29,7 +29,7 @@ BDM = [
 class spot_client(object):
     def __init__(self):
         self._spotClient = None
-    
+
     @property
     def spotClient(self):
         return self._spotClient
@@ -307,7 +307,8 @@ def run(wale_s3_prefix, image_id, instance_type, elasticsearch, spot_instance, s
         client = spot_client()
         client.spotClient = ec2_spot
         print("security_groups: %s" % security_groups)
-        instances = spot_instances(ec2_spot, spot_price, count, image_id, instance_type, security_groups, user_data, iam_role, BDM)
+        # instances = spot_instances(ec2_spot, spot_price, count, image_id, instance_type, security_groups, user_data, iam_role, BDM)
+        exit()
     else:
         instances = create_ec2_instances(ec2, image_id, count, instance_type, security_groups, user_data, BDM, iam_role)
 
