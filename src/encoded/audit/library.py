@@ -19,7 +19,7 @@ def audit_library_nih_consent(value, system):
             return
         detail = 'Library {} is missing the NIH consent identifier required for human data in'\
                  ' ENCODE 4.'.format(value['@id'])
-        yield AuditFailure('missing nih_consent', detail, level='INTERNAL_ACTION')
+        yield AuditFailure('missing nih_consent', detail, level='ERROR')
     # This return follows pattern of other audits.
     return
 
