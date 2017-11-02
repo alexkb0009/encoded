@@ -50,7 +50,7 @@ def get_spot_code(instance, client, spot_id):
     code_status_start = request['SpotInstanceRequests'][0]['Status']
     code_status = code_status_start['Code']
 
-    #print("\n Code Status: %s" % code_status)  
+    #print("\n Code Status: %s" % code_status)
     #for key, value in request.items():
      #  if key == 'SpotInstanceRequests':
       #      for item in value:
@@ -67,7 +67,7 @@ def wait_for_code_change(instance, client):
 
     if not get_spot_code(instance, client, spot_id) == 'fulfilled':
         print("waiting for spot request to be fulfilled")
-        code_status = get_spot_code(instance, client, get_spot_id(instance, client))                     
+        code_status = get_spot_code(instance, client, get_spot_id(instance, client))
         while code_status != 'fulfilled':
             if code_status == error_cleanup(code_status, instance, client):
                 exit()
@@ -230,7 +230,7 @@ def tag_spot_instance(instance, name, branch, commit, username, elasticsearch, c
 
 def run(wale_s3_prefix, image_id, instance_type, elasticsearch, spot_instance, spot_price, cluster_size, cluster_name, check_price,
         branch=None, name=None, role='demo', profile_name=None, teardown_cluster=None):
-    
+
     if branch is None:
         branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).decode('utf-8').strip()
 
@@ -290,7 +290,7 @@ def run(wale_s3_prefix, image_id, instance_type, elasticsearch, spot_instance, s
         security_groups = ['elasticsearch-https']
         iam_role = 'elasticsearch-instance'
         count = int(cluster_size)
-    
+
     if check_price:
         ec2_spot = boto3.client('ec2')
         get_spot_price = spot_instance_price_check(ec2_spot, instance_type)
