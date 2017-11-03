@@ -10,6 +10,9 @@ def audit_library_nih_consent(value, system):
     '''
     if 'award' not in value or 'biosample' not in value:
         return
+    # Skip ENTEx samples.
+    if 'ENTEx' in value.get('biosample', {}).get('internal_tags', []):
+        return
     if (value.get('award', {}).get('rfa') == 'ENCODE4'
             and value.get('biosample',
                           {}).get('organism',
