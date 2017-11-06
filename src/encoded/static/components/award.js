@@ -1039,7 +1039,7 @@ export class StatusExperimentChart extends React.Component {
             chart.data.datasets[1] = {};
             chart.data.datasets[2] = {};
         }
-        chart.options.onClick.baseSearchUri = `${linkUri}${award.name}${objectQuery}`;
+        chart.options.onClick.baseSearchUri = `${linkUri}${award ? award.name : ''}${objectQuery}`;
         chart.update();
 
         document.getElementById(`${statusChartId}-${this.props.ident}-legend`).innerHTML = chart.generateLegend();
@@ -1052,7 +1052,7 @@ export class StatusExperimentChart extends React.Component {
         const replicatelabels = ['unreplicated', 'isogenic', 'anisogenic'];
         const colors = replicatelabels.map((label, i) => statusColorList[i % statusColorList.length]);
 
-        createBarChart(chartId, data, colors, replicatelabels, `${this.props.linkUri}${this.props.award.name}`, (uri) => { this.context.navigate(uri); })
+        createBarChart(chartId, data, colors, replicatelabels, `${this.props.linkUri}${this.award ? this.props.award.name : ''}`, (uri) => { this.context.navigate(uri); })
             .then((chartInstance) => {
                 // Save the created chart instance.
                 this.chart = chartInstance;
@@ -1070,7 +1070,7 @@ export class StatusExperimentChart extends React.Component {
                 <div className="award-charts__title">
                     Status
                 </div>
-                 {statuses.length ?
+                {statuses.length ?
                     <div className="award-charts__visual">
                         <div id={id} className="award-charts__canvas">
                             <canvas id={`${id}-chart`} />
@@ -1086,7 +1086,7 @@ export class StatusExperimentChart extends React.Component {
 }
 
 StatusExperimentChart.propTypes = {
-    award: PropTypes.object.isRequired, // Award being displayed
+    award: PropTypes.object, // Award being displayed
     statuses: PropTypes.array, // Array of status facet data
     linkUri: PropTypes.string.isRequired, // URI to use for matrix links
     ident: PropTypes.string.isRequired, // Unique identifier to `id` the charts
@@ -1098,6 +1098,7 @@ StatusExperimentChart.propTypes = {
 };
 
 StatusExperimentChart.defaultProps = {
+    award: null,
     statuses: [],
     unreplicated: {},
     anisogenic: {},

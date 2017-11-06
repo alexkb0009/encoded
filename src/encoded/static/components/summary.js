@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import url from 'url';
 import { Panel } from '../libs/bootstrap/panel';
-import { LabChart, CategoryChart } from './award';
+import { LabChart, CategoryChart, StatusExperimentChart } from './award';
 import * as globals from './globals';
 import { FacetList } from './search';
 
@@ -142,13 +142,28 @@ class SummaryData extends React.Component {
         // Find the labs facet in the search results.
         const labFacet = context.facets.find(facet => facet.field === 'lab.title');
         const assayFacet = context.facets.find(facet => facet.field === 'assay_title');
+        const statusFacet = context.facets.find(facet => facet.field === 'status');
         const labs = labFacet ? labFacet.terms : null;
         const assays = assayFacet ? assayFacet.terms : null;
+        const statuses = statusFacet ? statusFacet.terms : null;
 
         return (
             <div className="summary-content__data">
                 {labs ? <LabChart labs={labs} linkUri="/matrix/?type=Experiment&" ident="experiments" /> : null}
                 {assays ? <CategoryChart categoryData={assays} categoryFacet="assay_title" title="Assays" linkUri="/matrix/?type=Experiment&" ident="assays" /> : null}
+                {statuses ?
+                    <StatusExperimentChart
+                        experiments={experiments}
+                        statuses={experimentsConfig.statuses || []}
+                        linkUri={experimentsConfig.linkUri}
+                        ident={experimentsConfig.ident}
+                        unreplicated={unreplicated}
+                        isogenic={isogenic}
+                        anisogenic={anisogenic}
+                        selectedOrganisms={updatedGenusArray}
+                        objectQuery={ExperimentQuery}
+                    />
+                : null}
             </div>
         );
     }

@@ -760,6 +760,7 @@ def search(context, request, search_type=None, return_generator=False):
     # Decide whether to use scan for results.
     do_scan = size is None or size > 1000
     # Execute the query
+    print('Q: {}'.format(query))
     if do_scan:
         es_results = es.search(body=query, index=es_index, search_type='count')
     else:
@@ -1581,9 +1582,9 @@ def summary(context, request):
 
     # Get some required information from the matrix property of the type we're examining. Also
     # prepopulate `results` with some info before it gets filled in with ES search results.
-    matrix = result['summary'] = type_info.factory.matrix.copy()
-    matrix['search_base'] = request.route_path('search', slash='/') + search_base
-    matrix['clear_summary'] = request.route_path('summary', slash='/') + '?type=' + item_type
+    summary = result['summary'] = type_info.factory.matrix.copy()
+    summary['search_base'] = request.route_path('search', slash='/') + search_base
+    summary['clear_summary'] = request.route_path('summary', slash='/') + '?type=' + item_type
     result['title'] = type_info.name + ' Summary'
 
     # Retrieve the Elasticsearch instance so we can perform our summary search.
@@ -1623,14 +1624,15 @@ def summary(context, request):
 
     # Add facets to the query.
     facets = [(field, facet) for field, facet in schema['facets'].items() if
-              field in matrix['x']['facets'] or field in matrix['y']['facets']]
+              field in summary['x']['facets'] or field in summary['y']['facets']]
 
     # Convert our facet specification to an ES aggregations query.
     query['aggs'] = set_facets(facets, used_filters, principals, doc_types)
 
     # Group results in 2 dimensions.
-    x_grouping = matrix['x']['group_by']
-    y_groupings = matrix['y']['group_by']
+    x_grouping = summary['x']['group_by']
+    y_groupings = summary['y']['group_by']
+    summary_groupings = summary['summary']
     x_agg = {
         "terms": {
             "field": 'embedded.' + x_grouping + '.raw',
@@ -1648,21 +1650,35 @@ def summary(context, request):
                 "aggs": aggs,
             },
         }
+    summary_aggs = None
+    for field in reversed(summary_groupings):
+        sub_summary_aggs = summary_aggs
+        summary_aggs = {
+            field: {
+                "terms": {
+                    "field": 'embedded.' + field + '.raw',
+                    "size": 0,  # no limit
+                },
+            },
+        }
+        if sub_summary_aggs:
+            summary_aggs[field]['aggs'] = sub_summary_aggs
     aggs['x'] = x_agg
-    query['aggs']['matrix'] = {
+    query['aggs']['summary'] = {
         "filter": {
             "bool": {
                 "must": filters,
             }
         },
-        "aggs": aggs,
+        "aggs": summary_aggs,
     }
 
     # Execute the query. The facet data we're looking for gets returned in the "aggregations"
     # property of es_results.
     es_results = es.search(body=query, index=es_index, search_type='count')
+    print('Q: {}'.format(es_results))
     aggregations = es_results['aggregations']
-    result['summary']['doc_count'] = total = aggregations['matrix']['doc_count']
+    result['summary']['doc_count'] = total = aggregations['summary']['doc_count']
     result['summary']['max_cell_doc_count'] = 0
 
     # Format the aggregations into facet data the front end can understand. We only use the one

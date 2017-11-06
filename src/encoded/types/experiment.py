@@ -426,7 +426,7 @@ class Experiment(Dataset,
                 'award.project',
                 'assembly',
                 'internal_status',
-                'audit_category', # Added for auditmatrix
+                'audit_category',  # Added for auditmatrix
                 'lab.title'
             ],
             'group_by': ['biosample_type', 'biosample_term_name'],
@@ -443,6 +443,7 @@ class Experiment(Dataset,
             'group_by': 'assay_title',
             'label': 'Assay',
         },
+        'summary': ['status', 'replication_type'],
     }
 
 
