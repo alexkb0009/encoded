@@ -31,17 +31,17 @@ class SummaryStatusChart extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.statuses.length) {
-            this.createChart(`${statusChartId}-${this.props.ident}`, this.props.statuses);
+        if (this.props.totalStatusData) {
+            this.createChart(this.chartId, this.props.statusData);
         }
     }
 
     componentDidUpdate() {
         if (this.props.statuses.length) {
             if (this.chart) {
-                this.updateChart(this.chart, this.props.statuses);
+                this.updateChart(this.chart);
             } else {
-                this.createChart(`${statusChartId}-${this.props.ident}`, this.props.statuses);
+                this.createChart(this.chartId);
             }
         } else if (this.chart) {
             this.chart.destroy();
@@ -105,22 +105,22 @@ class SummaryStatusChart extends React.Component {
     }
 
     render() {
-        const { statuses, ident } = this.props;
+        const { totalStatusData, ident } = this.props;
 
         // Calculate a (hopefully) unique ID to put on the DOM elements.
-        const id = `${statusChartId}-${ident}`;
+        this.chartId = `status-chart-${ident}`;
 
         return (
             <div className="award-charts__chart">
                 <div className="award-charts__title">
                     Status
                 </div>
-                {statuses.length ?
+                {totalStatusData ?
                     <div className="award-charts__visual">
-                        <div id={id} className="award-charts__canvas">
-                            <canvas id={`${id}-chart`} />
+                        <div id={this.chartId} className="award-charts__canvas">
+                            <canvas id={`${this.chartId}-chart`} />
                         </div>
-                        <div id={`${id}-legend`} className="award-charts__legend" />
+                        <div id={`${this.chartId}-legend`} className="award-charts__legend" />
                     </div>
                 :
                     <div className="chart-no-data" style={{ height: this.wrapperHeight }}>No data to display</div>
@@ -131,10 +131,11 @@ class SummaryStatusChart extends React.Component {
 }
 
 SummaryStatusChart.propTypes = {
-    award: PropTypes.object, // Award being displayed
+    statusData: PropTypes.object.isRequired, // Experiment status data from /summary/ search results
+    totalStatusData: PropTypes.number.isRequired, // Total number of statuses to chart
+    ident: PropTypes.string.isRequired, // Unique identifier to `id` the charts
     statuses: PropTypes.array, // Array of status facet data
     linkUri: PropTypes.string.isRequired, // URI to use for matrix links
-    ident: PropTypes.string.isRequired, // Unique identifier to `id` the charts
     experiments: PropTypes.object.isRequired,
     unreplicated: PropTypes.object,
     anisogenic: PropTypes.object,
@@ -279,12 +280,18 @@ class SummaryData extends React.Component {
         const assays = assayFacet ? assayFacet.terms : null;
 
         // Get the status data with a process completely different from the others because it comes
-        // in its own property in the /summary/ context.
+        // in its own property in the /summary/ context. Start by getting the name of the property
+        // that contains the status data, as well as the number of items within it.
+        const statusProp = context.summary.summary_grouping[0];
+        const statusSection = context.summary[statusProp];
+        const statusDataCount = statusSection.doc_count;
+        const statusData = statusSection[statusProp];
 
         return (
             <div className="summary-content__data">
                 {labs ? <LabChart labs={labs} linkUri="/matrix/?type=Experiment&" ident="experiments" /> : null}
                 {assays ? <CategoryChart categoryData={assays} categoryFacet="assay_title" title="Assays" linkUri="/matrix/?type=Experiment&" ident="assays" /> : null}
+                {statusDataCount ? <SummaryStatusChart statusData={statusData} ident="status" /> : null}
             </div>
         );
     }
