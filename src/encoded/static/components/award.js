@@ -9,7 +9,7 @@ import * as globals from './globals';
 import { ProjectBadge } from './image';
 import { PickerActions } from './search';
 import { SortTablePanel, SortTable } from './sorttable';
-import StatusLabel from './statuslabel';
+import { StatusLabel } from './statuslabel';
 
 const labChartId = 'lab-chart'; // Lab chart <div> id attribute
 const categoryChartId = 'category-chart'; // Assay chart <div> id attribute
@@ -180,7 +180,7 @@ function createDoughnutChart(chartId, values, labels, colors, baseSearchUri, nav
 //             because this function can't access the navigation function.
  * @return {promise}
  */
-function createBarChart(chartId, data, colors, replicateLabels, baseSearchUri, navigate) {
+export function createBarChart(chartId, data, colors, replicateLabels, baseSearchUri, navigate) {
     return new Promise((resolve) => {
         require.ensure(['chart.js'], (require) => {
             const Chart = require('chart.js');
@@ -978,7 +978,7 @@ ControlsChart.contextTypes = {
     navigate: PropTypes.func,
 };
 
-export class StatusExperimentChart extends React.Component {
+class StatusExperimentChart extends React.Component {
     constructor() {
         super();
         this.createChart = this.createChart.bind(this);

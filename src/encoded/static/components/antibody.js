@@ -11,7 +11,7 @@ import { ExperimentTable } from './dataset';
 import { DbxrefList } from './dbxref';
 import { DocumentsPanel, Document, DocumentPreview } from './doc';
 import { RelatedItems } from './item';
-import StatusLabel from './statuslabel';
+import { StatusLabel } from './statuslabel';
 
 
 const LotComponent = (props, reactContext) => {

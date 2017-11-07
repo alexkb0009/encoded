@@ -6,7 +6,7 @@ import * as globals from './globals';
 import { Breadcrumbs } from './navigation';
 import { PanelLookup } from './objectutils';
 import { PickerActions } from './search';
-import StatusLabel from './statuslabel';
+import { StatusLabel } from './statuslabel';
 
 
 // Display a stand-alone TALEN page.

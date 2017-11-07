@@ -760,7 +760,6 @@ def search(context, request, search_type=None, return_generator=False):
     # Decide whether to use scan for results.
     do_scan = size is None or size > 1000
     # Execute the query
-    print('Q: {}'.format(query))
     if do_scan:
         es_results = es.search(body=query, index=es_index, search_type='count')
     else:
