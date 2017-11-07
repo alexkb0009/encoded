@@ -1008,6 +1008,7 @@ def matrix(context, request):
     }
 
     # Execute the query
+    print('M: {}'.format(query))
     es_results = es.search(body=query, index=es_index, search_type='count')
 
     # Format matrix for results
@@ -1632,7 +1633,7 @@ def summary(context, request):
     # Group results in 2 dimensions.
     x_grouping = summary['x']['group_by']
     y_groupings = summary['y']['group_by']
-    summary_groupings = summary['summary']
+    summary_groupings = summary['summary_grouping']
     x_agg = {
         "terms": {
             "field": 'embedded.' + x_grouping + '.raw',
@@ -1680,6 +1681,7 @@ def summary(context, request):
     aggregations = es_results['aggregations']
     result['summary']['doc_count'] = total = aggregations['summary']['doc_count']
     result['summary']['max_cell_doc_count'] = 0
+    result['summary'][summary_groupings[0]] = es_results['aggregations']['summary']
 
     # Format the aggregations into facet data the front end can understand. We only use the one
     # relevant schema for the /summary/ page.

@@ -1,0 +1,1069 @@
+{
+    "@context": "/terms/",
+    "facets": [
+        {
+            "title": "Assay category",
+            "field": "assay_slims",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 18,
+                    "key": "DNA binding"
+                },
+                {
+                    "doc_count": 12,
+                    "key": "Transcription"
+                },
+                {
+                    "doc_count": 6,
+                    "key": "DNA methylation"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "Replication timing"
+                },
+                {
+                    "doc_count": 2,
+                    "key": "3D chromatin structure"
+                },
+                {
+                    "doc_count": 2,
+                    "key": "DNA sequencing"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "DNA accessibility"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "RNA binding"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Assay",
+            "field": "assay_title",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 18,
+                    "key": "ChIP-seq"
+                },
+                {
+                    "doc_count": 6,
+                    "key": "total RNA-seq"
+                },
+                {
+                    "doc_count": 4,
+                    "key": "DNAme array"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "Repli-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "5C"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "DNase-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "Hi-C"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "ISO-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "RAMPAGE"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "RNA Bind-n-Seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "RRBS"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "STARR-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "WGBS"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "polyA mRNA RNA-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "shRNA RNA-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "small RNA-seq"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Project",
+            "field": "award.project",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 37,
+                    "key": "ENCODE"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "Roadmap"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "modERN"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "GGR"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Genome assembly (visualization)",
+            "field": "assembly",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 3,
+                    "key": "hg19"
+                },
+                {
+                    "doc_count": 2,
+                    "key": "mm9"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "GRCh38"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "GRCh38-minimal"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "ce10"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "mm10"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Organism",
+            "field": "replicates.library.biosample.donor.organism.scientific_name",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 31,
+                    "key": "Homo sapiens"
+                },
+                {
+                    "doc_count": 4,
+                    "key": "Mus musculus"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "Caenorhabditis elegans"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "Drosophila melanogaster"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Target of assay",
+            "field": "target.investigated_as",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 10,
+                    "key": "transcription factor"
+                },
+                {
+                    "doc_count": 8,
+                    "key": "histone modification"
+                },
+                {
+                    "doc_count": 6,
+                    "key": "histone"
+                },
+                {
+                    "doc_count": 4,
+                    "key": "control"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "RNA binding protein"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "recombinant protein"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "tag"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Biosample type",
+            "field": "biosample_type",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 31,
+                    "key": "immortalized cell line"
+                },
+                {
+                    "doc_count": 4,
+                    "key": "primary cell"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "tissue"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "whole organisms"
+                },
+                {
+                    "doc_count": 2,
+                    "key": "in vitro sample"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "in vitro differentiated cells"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "stem cell"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Organ",
+            "field": "organ_slims",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 18,
+                    "key": "blood"
+                },
+                {
+                    "doc_count": 10,
+                    "key": "lung"
+                },
+                {
+                    "doc_count": 6,
+                    "key": "brain"
+                },
+                {
+                    "doc_count": 4,
+                    "key": "bronchus"
+                },
+                {
+                    "doc_count": 4,
+                    "key": "epithelium"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "lymph node"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "mammary gland"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "blood vessel"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "embryo"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "heart"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "musculature of body"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "pancreas"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "prostate gland"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "vasculature"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Available data",
+            "field": "files.file_type",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 18,
+                    "key": "bam"
+                },
+                {
+                    "doc_count": 12,
+                    "key": "fastq"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "bigWig"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "bed narrowPeak"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "bigBed bedMethyl"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "bigBed narrowPeak"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "csfasta"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "csqual"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "idat"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "rcc"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "tsv"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "bed bed9"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "bed enhancer predictions"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "bigBed bed6"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "tar"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Date released",
+            "field": "month_released",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 40,
+                    "key": "January, 2016"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "August, 2015"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2014-09"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2014-11"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2014-12"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2015-01"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2015-02"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2015-03"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2015-04"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2015-05"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2015-06"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2015-10"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-03"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-04"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-05"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-06"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-07"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-08"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-09"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-10"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-11"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2016-12"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2017-01"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2017-02"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "2017-11"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "April, 1994"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "April, 2015"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "December, 1999"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "February, 2015"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "July, 2014"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "June, 2011"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "June, 2012"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "June, 2016"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "November, 2013"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "October, 2001"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "October, 2011"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "October, 2014"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "October, 2015"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "September, 2016"
+                }
+            ],
+            "total": 43
+        },
+        {
+            "title": "Lab",
+            "field": "lab.title",
+            "type": "terms",
+            "terms": [
+                {
+                    "doc_count": 9,
+                    "key": "Robert Waterston, UW"
+                },
+                {
+                    "doc_count": 7,
+                    "key": "Bradley Bernstein, Broad"
+                },
+                {
+                    "doc_count": 7,
+                    "key": "Richard Myers, HAIB"
+                },
+                {
+                    "doc_count": 6,
+                    "key": "John Stamatoyannopoulos, UW"
+                },
+                {
+                    "doc_count": 6,
+                    "key": "Thomas Gingeras, CSHL"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "Sherman Weissman, Yale"
+                },
+                {
+                    "doc_count": 2,
+                    "key": "Michael Snyder, Stanford"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "Ali Mortazavi, UCI"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "Brenton Graveley, UConn"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "Chris Burge, MIT"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Barbara Wold, Caltech"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Bing Ren, UCSD"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "ENCODE Processing Pipeline"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "ENCODE2 Project, UCSC"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Gene Yeo, UCSD"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Greg Cooper, HAIB"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Gregory Crawford, Duke"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "J. Michael Cherry, Stanford"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Jason Lieb, UNC"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Job Dekker, UMass"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Joe Ecker, Salk"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "John Rinn, Broad"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Kevin White, UChicago"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Len Pennacchio, JGI"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Peggy Farnham, USC"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Roadmap Epigenomics, Baylor"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Roderic Guigo, CRG"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Ross Hardison, PennState"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Tim Reddy, Duke"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Vishwanath Iyer, UTA"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "W. James Kent, UCSC"
+                },
+                {
+                    "doc_count": 0,
+                    "key": "Xiang-Dong Fu, UCSD"
+                }
+            ],
+            "total": 43
+        }
+    ],
+    "summary": {
+        "x": {
+            "facets": [
+                "assay_title",
+                "assay_slims",
+                "target.investigated_as",
+                "month_released",
+                "files.file_type"
+            ],
+            "limit": 20,
+            "doc_count_error_upper_bound": 0,
+            "label": "Assay",
+            "buckets": [
+                {
+                    "doc_count": 18,
+                    "key": "ChIP-seq"
+                },
+                {
+                    "doc_count": 6,
+                    "key": "total RNA-seq"
+                },
+                {
+                    "doc_count": 4,
+                    "key": "DNAme array"
+                },
+                {
+                    "doc_count": 3,
+                    "key": "Repli-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "5C"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "DNase-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "Hi-C"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "ISO-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "RAMPAGE"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "RNA Bind-n-Seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "RRBS"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "STARR-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "WGBS"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "polyA mRNA RNA-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "shRNA RNA-seq"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "small RNA-seq"
+                }
+            ],
+            "sum_other_doc_count": 0,
+            "group_by": "assay_title"
+        },
+        "clear_summary": "/summary/?type=Experiment",
+        "max_cell_doc_count": 0,
+        "y": {
+            "facets": [
+                "replicates.library.biosample.donor.organism.scientific_name",
+                "biosample_type",
+                "organ_slims",
+                "award.project",
+                "assembly",
+                "internal_status",
+                "audit_category",
+                "lab.title"
+            ],
+            "biosample_type": {
+                "buckets": [
+                    {
+                        "doc_count": 31,
+                        "key": "immortalized cell line",
+                        "biosample_term_name": {
+                            "buckets": [
+                                {
+                                    "assay_title": [
+                                        7,
+                                        3,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        1,
+                                        0,
+                                        1,
+                                        0,
+                                        1,
+                                        1,
+                                        1,
+                                        1
+                                    ],
+                                    "doc_count": 16,
+                                    "key": "K562"
+                                },
+                                {
+                                    "assay_title": [
+                                        5,
+                                        0,
+                                        0,
+                                        0,
+                                        1,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "doc_count": 6,
+                                    "key": "A549"
+                                },
+                                {
+                                    "assay_title": [
+                                        3,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "doc_count": 3,
+                                    "key": "CH12.LX cell"
+                                },
+                                {
+                                    "assay_title": [
+                                        0,
+                                        0,
+                                        0,
+                                        3,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "doc_count": 3,
+                                    "key": "SK-N-SH"
+                                },
+                                {
+                                    "assay_title": [
+                                        2,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "doc_count": 2,
+                                    "key": "GM12878"
+                                },
+                                {
+                                    "assay_title": [
+                                        1,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "doc_count": 1,
+                                    "key": "MCF-7 cell"
+                                }
+                            ],
+                            "sum_other_doc_count": 0,
+                            "doc_count_error_upper_bound": 0
+                        }
+                    },
+                    {
+                        "doc_count": 4,
+                        "key": "primary cell",
+                        "biosample_term_name": {
+                            "buckets": [
+                                {
+                                    "assay_title": [
+                                        0,
+                                        0,
+                                        4,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "doc_count": 4,
+                                    "key": "basal cell of epithelium of terminal bronchiole"
+                                }
+                            ],
+                            "sum_other_doc_count": 0,
+                            "doc_count_error_upper_bound": 0
+                        }
+                    },
+                    {
+                        "doc_count": 3,
+                        "key": "tissue",
+                        "biosample_term_name": {
+                            "buckets": [
+                                {
+                                    "assay_title": [
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        1,
+                                        0,
+                                        1,
+                                        0,
+                                        0,
+                                        0,
+                                        1,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "doc_count": 3,
+                                    "key": "midbrain"
+                                }
+                            ],
+                            "sum_other_doc_count": 0,
+                            "doc_count_error_upper_bound": 0
+                        }
+                    },
+                    {
+                        "doc_count": 3,
+                        "key": "whole organisms",
+                        "biosample_term_name": {
+                            "buckets": [
+                                {
+                                    "assay_title": [
+                                        0,
+                                        3,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "doc_count": 3,
+                                    "key": "multi-cellular organism"
+                                }
+                            ],
+                            "sum_other_doc_count": 0,
+                            "doc_count_error_upper_bound": 0
+                        }
+                    },
+                    {
+                        "doc_count": 2,
+                        "key": "in vitro sample",
+                        "biosample_term_name": {
+                            "buckets": [],
+                            "sum_other_doc_count": 0,
+                            "doc_count_error_upper_bound": 0
+                        }
+                    }
+                ],
+                "sum_other_doc_count": 0,
+                "doc_count_error_upper_bound": 0
+            },
+            "label": "Biosample",
+            "limit": 5,
+            "group_by": [
+                "biosample_type",
+                "biosample_term_name"
+            ]
+        },
+        "doc_count": 43,
+        "summary": [
+            "status",
+            "replication_type"
+        ],
+        "search_base": "/search/?type=Experiment&format=json"
+    },
+    "filters": [],
+    "@type": [
+        "Summary"
+    ],
+    "title": "Experiment Summary",
+    "notification": "",
+    "@id": "/summary/?type=Experiment&format=json"
+}

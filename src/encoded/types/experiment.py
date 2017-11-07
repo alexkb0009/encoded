@@ -443,7 +443,7 @@ class Experiment(Dataset,
             'group_by': 'assay_title',
             'label': 'Assay',
         },
-        'summary': ['status', 'replication_type'],
+        'summary_grouping': ['status', 'replication_type'],
     }
 
 
